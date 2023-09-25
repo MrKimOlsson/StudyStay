@@ -4,22 +4,22 @@ import ResidentialGrid from "../components/ResidentialGrid";
 
 const Home = () => {
 
-  const [apartments, setApartments] = useState<TApartment[]>([]);
+  const [residentials, setResidentials] = useState<TResidentialUnit[]>([]);
 
   useEffect(() => {
     async function fetchApartments() {
-      const newApartments = await getApartments();
-      setApartments(newApartments);
+      const newResidentials = await getApartments();
+      setResidentials(newResidentials);
     }
     fetchApartments();
   }, []);
 
-  console.log(apartments)
+  console.log(residentials)
 
   return (
     <div className="container">
-      {apartments.length > 0 ? (
-            <ResidentialGrid apartments={apartments} />
+      {residentials.length > 0 ? (
+            <ResidentialGrid residentials={residentials} />
           ) : (
             <h2>No products to show</h2>
           )}

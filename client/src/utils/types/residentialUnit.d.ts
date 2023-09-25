@@ -1,10 +1,10 @@
-type TApartment = {
+type TResidentialUnit = {
     title: string;
-    // cards: string[];
     price: string;
     descripiton: string;
     period: string;
     avalible: string;
     imageURL: Array;
+    unitType: string;
     _id: string;
   };

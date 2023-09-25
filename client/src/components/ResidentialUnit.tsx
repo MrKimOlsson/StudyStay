@@ -1,27 +1,24 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-// import { ProductType } from '../../utils/types/product';
-// import AddToCartFunctions from './AddToCartFunction'; // Correct the import if necessary
 
 interface Props {
-  apartment: TApartment;
+  unit: TResidentialUnit;
 }
 
-const ResidentialUnit: React.FC<Props> = ({ apartment }) => {
+const ResidentialUnit: React.FC<Props> = ({ unit }) => {
   return (
-    <Link className='residentialCard' to={`/apartment/${apartment._id}`}>
-      {apartment.imageURL.length > 0 ? (
-        <img className='residentialGridImage' src={apartment.imageURL[0]} alt="residentialImage" />
+    <Link className='residentialCard' to={`/residential/${unit.unitType}/${unit._id}`}>
+      {unit.imageURL.length > 0 ? (
+        <img className='residentialGridImage' src={unit.imageURL[0]} alt="residentialImage" />
       ) : (
         <p>No image available</p>
       )}
-      <h4 className='residentialTitle'>{apartment.title}</h4>
+      <h4 className='residentialTitle'>{unit.title}</h4>
       <div className='row'>
-        <p><strong>Price: </strong>{apartment.price}$</p>
-        <p><strong>Description: </strong>{apartment.descripiton}</p>
-        <p><strong>Period: </strong>{apartment.period}</p>
-        <p><strong>Avalible: </strong>{apartment.avalible}</p>
-        {/* <AddToCartFunctions product={product} /> */}
+        <p><strong>Price: </strong>{unit.price}$</p>
+        <p><strong>Description: </strong>{unit.descripiton}</p>
+        <p><strong>Period: </strong>{unit.period}</p>
+        <p><strong>Avalible: </strong>{unit.avalible}</p>
       </div>
     </Link>
   );
