@@ -8,7 +8,7 @@ const RootLayout = () => {
       {/* Render the Navbar component */}      
       <Navbar />
 
-      <div className="container">
+      <div className="wrapper">
         {/* Renders a child components of the RootLayout element component AKA the pages */}
         <Outlet />
       </div>
