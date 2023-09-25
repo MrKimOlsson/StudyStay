@@ -6,7 +6,7 @@ export async function createApartmentController(req: Request, res: Response) {
     title: req.body.title,
     price: req.body.price,
     description: req.body.description,
-    periond: req.body.period,
+    period: req.body.period,
   });
   const createdApartment = await newApartment.save();
   res.json(createdApartment);
