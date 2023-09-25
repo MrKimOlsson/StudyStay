@@ -4,14 +4,14 @@ import ResidentialUnit from './ResidentialUnit'; // Make sure the import path is
 import '../utils/styles/grid.scss'
 
 interface GridProps {
-  apartments: TApartment[];
+  residentials: TResidentialUnit[];
 }
 
-const ResidentialGrid: React.FC<GridProps> = ({ apartments }: GridProps) => {
+const ResidentialGrid: React.FC<GridProps> = ({ residentials }: GridProps) => { 
   return (
-      <div className='flex-wrap'>
-        {apartments.length > 0 ? (
-          apartments.map(apartment => <ResidentialUnit key={apartment._id} apartment={apartment} />)
+      <div className='flex-wrap'> 
+        {residentials.length > 0 ? (
+          residentials.map(unit => <ResidentialUnit key={unit._id} unit={unit} />)
         ) : (
           <h2>No products to show</h2>
         )}
