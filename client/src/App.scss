@@ -1,9 +1,14 @@
 .wrapper {
     display: flex;
     justify-content: center;
+    align-items: center;
     // margin-top: 3rem;
 }
 
 .container {
     margin: 5rem 0rem 5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }

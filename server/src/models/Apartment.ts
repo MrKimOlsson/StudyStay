@@ -8,6 +8,9 @@ const ApartmentSchema = new Schema({
     price: String,
     description: String,
     period: String,
+    avalible: String,
+    imageURL: Array,
+    unitType: String,
 })
 
 const ApartmentModel = mongoose.model('Apartment', ApartmentSchema);

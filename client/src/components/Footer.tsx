@@ -15,8 +15,8 @@ const Footer = () => {
         <div>
           <ul className="footer-menu">
               <li><NavLink className='nav-link' to='/'>Home</NavLink></li>
-              <li><NavLink className='nav-link' to='/details'>Details</NavLink></li>
-              <li><NavLink className='nav-link' to='/apartment'>Apartment</NavLink></li>
+              {/* <li><NavLink className='nav-link' to='/details'>Details</NavLink></li>
+              <li><NavLink className='nav-link' to='/apartment'>Apartment</NavLink></li> */}
               <li><NavLink className='nav-link' to='/addApartment'>Add apartment</NavLink></li>
           </ul>
         </div>

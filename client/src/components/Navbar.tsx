@@ -40,18 +40,18 @@ const Navbar = () => {
      <nav className='navbar'>
         <menu className="menu-desktop">
           <Link to='/' ><img src={Logo} alt="StudyStay" className="link logo-img"/></Link>
-          <li><NavLink className='nav-link' to='/'>Home</NavLink></li>
-          <li><NavLink className='nav-link' to='/details'>Details</NavLink></li>
-          <li><NavLink className='nav-link' to='/apartment/:id'>Apartment</NavLink></li>
+          {/* <li><NavLink className='nav-link' to='/'>Home</NavLink></li> */}
+          {/* <li><NavLink className='nav-link' to='/details'>Details</NavLink></li>*/}
+          <li><NavLink className='nav-link' to='/register'>Register</NavLink></li>
           <li><NavLink className='nav-link' to='/addApartment'>Add apartment</NavLink></li>
         </menu>
 
         {/*-- Hidden menu --*/}
         <menu className="menuMobile">
-          <li><NavLink className="menuItem" to="/">Home</NavLink></li>
+          {/* <li><NavLink className="menuItem" to="/">Home</NavLink></li> */}
           <li><NavLink className='nav-link' to='/'>Home</NavLink></li>
-          <li><NavLink className='nav-link' to='/details'>Details</NavLink></li>
-          <li><NavLink className='nav-link' to='/apartment'>Apartment</NavLink></li>
+          {/* <li><NavLink className='nav-link' to='/details'>Details</NavLink></li>
+          <li><NavLink className='nav-link' to='/apartment'>Apartment</NavLink></li> */}
           <li><NavLink className='nav-link' to='/addApartment'>Add apartment</NavLink></li>
         </menu>
 

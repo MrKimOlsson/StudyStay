@@ -4,9 +4,10 @@ import './App.scss';
 
 // Pages
 import Home from './routes/Home';
-import Details from './routes/Details';
+// import Details from './routes/Details';
 import Residential from './routes/Residential';
 import AddApartment from './routes/AddApartment';
+import RegisterUser from './components/RegisterUser';
 
 const App = () => {
 
@@ -21,10 +22,10 @@ const App = () => {
           index: true,
           element: <Home />,
         },
-        {
-          path: 'details',
-          element: <Details />,
-        },
+        // {
+        //   path: 'details',
+        //   element: <Details />,
+        // },
         {
           path: 'residential/:unitType/:id',
           element: <Residential />,
@@ -32,6 +33,10 @@ const App = () => {
         {
           path: 'addApartment',
           element: <AddApartment />,
+        },
+        {
+          path: 'register',
+          element: <RegisterUser />,
         },
       ],
     },
