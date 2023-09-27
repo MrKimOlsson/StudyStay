@@ -1,11 +1,35 @@
-import { useEffect} from 'react';
+import { useEffect, useState } from "react";
 import { Link, NavLink } from 'react-router-dom';
 import Logo from '../assets/logo.png'
+import NavbarLoggedInView from "./NavbarLoggedInView";
+import NavbarLoggedOutView from "./NavbarLoggedOutView";
 import '../utils/styles/navbar.scss'
 
+interface NavbarProps {
+  loggedInUser: User | null,
+  onSignUpClicked: () => void,
+  onLoginClicked: () => void,
+  onLogoutSuccessful: () => void,
+}
 
+const Navbar = ({ loggedInUser, onSignUpClicked, onLoginClicked, onLogoutSuccessful }: NavbarProps) => {
 
-const Navbar = () => {
+  // const [loggedInUser, setLoggedInUser] = useState<User | null>(null);
+
+	// const [showSignUpModal, setShowSignUpModal] = useState(false);
+	// const [showLoginModal, setShowLoginModal] = useState(false);
+
+	// useEffect(() => {
+	// 	async function fetchLoggedInUser() {
+	// 		try {
+	// 			const user = await handleUsers.getLoggedInUser();
+	// 			setLoggedInUser(user);
+	// 		} catch (error) {
+	// 			console.error(error);
+	// 		}
+	// 	}
+	// 	fetchLoggedInUser();
+	// }, []);
  
     //_____________________Navbar_____________________
 
@@ -43,8 +67,16 @@ const Navbar = () => {
           {/* <li><NavLink className='nav-link' to='/'>Home</NavLink></li> */}
           {/* <li><NavLink className='nav-link' to='/details'>Details</NavLink></li>*/}
           <li><NavLink className='nav-link' to='/register'>Register</NavLink></li>
+          <li><NavLink className='nav-link' to='/login'>Login</NavLink></li>
           <li><NavLink className='nav-link' to='/addApartment'>Add apartment</NavLink></li>
+          {loggedInUser
+        ? <NavbarLoggedInView user={loggedInUser} onLogoutSuccessful={onLogoutSuccessful} />
+        : <NavbarLoggedOutView onLoginClicked={onLoginClicked} onSignUpClicked={onSignUpClicked} />
+    }
         </menu>
+
+      
+              
 
         {/*-- Hidden menu --*/}
         <menu className="menuMobile">

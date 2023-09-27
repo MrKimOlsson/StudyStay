@@ -1,19 +1,24 @@
 import { API_URL } from "./config";
-// import { UserResponse } from './userResponse';
+import { getToken } from "../utils/auth"; // Define a function to retrieve the token
 
-export async function createUser(firstName: string, lastName: string, adress: string, email: string, phone: string): Promise<TUser> {
+export async function createUser(firstName: string, lastName: string, address: string, email: string, phone: string, password: string): Promise<TUser> {
+  const token = getToken(); // Implement a function to retrieve the token from localStorage
+
   const response = await fetch(`${API_URL}/users`, {
     method: "POST",
     body: JSON.stringify({
-        firstName,
-        lastName,
-        adress,
-        email,
-        phone,
+      firstName,
+      lastName,
+      address,
+      email,
+      phone,
+      password,
     }),
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`, // Include the token in the Authorization header
     },
   });
   return response.json();
 }
+

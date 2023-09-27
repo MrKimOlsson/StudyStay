@@ -1,31 +1,63 @@
-import React, {  useState } from "react";
-// import { Link } from "react-router-dom";
+import React, { useState } from "react";
 import { createUser } from "../api/createUser";
-import '../utils/styles/registerForm.scss'
+import { useNavigate } from "react-router-dom";
+import '../utils/styles/registerForm.scss';
+import { API_URL } from "../api/config";
 
 const RegisterUser = () => {
+  const navigate = useNavigate();
 
-    const [users, setUsers] = useState<TUser[]>([]);
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
-    const [email, setEmail] = useState("");
-    const [address, setAddress] = useState("");
-    const [phone, setPhone] = useState("");
-    
-    async function handleCreateUser(e: React.FormEvent) {
-      e.preventDefault();
-      const user = await createUser(firstName, lastName, email, address, phone);
-      setUsers([...users, user]);
-      setFirstName("");
-      setLastName("");
-      setEmail("");
-      setAddress("");
-      setPhone("");
+  const [users, setUsers] = useState<TUser[]>([]);
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [address, setAddress] = useState("");
+  const [phone, setPhone] = useState("");
+  const [password, setPassword] = useState("");
+
+  async function handleCreateUser(e: React.FormEvent) {
+    e.preventDefault();
+
+    // Basic validation
+    if (!firstName || !lastName || !email) {
+      alert("Please fill in all required fields.");
+      return;
     }
-    
-    return (
-      <div className="container">
-        <form onSubmit={handleCreateUser} id="registerForm">
+
+    try {
+      // Create the user
+      const user = await createUser(firstName, lastName, email, address, phone, password);
+      setUsers([...users, user]);
+
+      // Make a request to your server to get a JWT
+      const response = await fetch(`${API_URL}/users`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Registration failed');
+      }
+
+      const data = await response.json();
+      const { token } = data;
+
+      // Store the token in localStorage
+      localStorage.setItem('token', token);
+
+      // Navigate back to /home after successful registration
+      navigate('/');
+    } catch (error) {
+      alert('Registration failed');
+    }
+  }
+
+  return (
+    <div className="container">
+      <form onSubmit={handleCreateUser} id="registerForm">
           <label htmlFor="firstName">First name</label>
           <input
             id="firstName"
@@ -68,6 +100,16 @@ const RegisterUser = () => {
             value={phone}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               setPhone(e.target.value);
+            }}
+            
+          />
+
+          <label htmlFor="password">Password</label>
+          <input
+            id="password"
+            value={password}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              setPassword(e.target.value);
             }}
           />
     

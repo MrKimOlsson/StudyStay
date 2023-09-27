@@ -1,9 +1,14 @@
 import { config } from "dotenv";
 config();
+import env from "./utils/validateEnv";
+import "dotenv/config";
 
-import express from "express";
+import express , { NextFunction, Request, Response } from "express";
 import mongoose from "mongoose";
+import MongoStore from "connect-mongo";
 import cors from "cors";
+import createHttpError, { isHttpError } from "http-errors";
+import session from "express-session";
 // Apartments
 import { getApartmentsController } from "./controllers/apartment/getApartmentsController";
 import { createApartmentController } from "./controllers/apartment/createApartmentController";
@@ -20,12 +25,13 @@ import { createHouseController } from "./controllers/house/createHouseController
 import { deleteHouseController } from "./controllers/house/deleteHouseController";
 import { getHouseController } from "./controllers/house/getHouseController";
 // User
-import { getUsersController } from "./controllers/user/getUsersController";
-import { createUserController } from "./controllers/user/createUserController";
-import { deleteUserController } from "./controllers/user/deleteUserController";
-import { getUserController } from "./controllers/user/getUserController";
+// import { getUsersController } from "./controllers/user/getUsersController";
+// import { createUserController } from "./controllers/user/createUserController";
+// import { deleteUserController } from "./controllers/user/deleteUserController";
+// import { getUserController } from "./controllers/user/getUserController";
 
-const PORT = 5000;
+import userRoutes from './routes/users'
+
 const app = express();
 
 app.use(
@@ -33,6 +39,19 @@ app.use(
     origin: "*",
   })
 );
+app.use(session({
+  secret: env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+      maxAge: 60 * 60 * 1000,
+  },
+  rolling: true,
+  store: MongoStore.create({
+      mongoUrl: env.MONGO_CONNECTION_STRING
+  }),
+}));
+
 app.use(express.json());
 
 // Apartments
@@ -54,12 +73,31 @@ app.delete("/houses/:houseId", deleteHouseController);
 app.get("/houses/:houseId", getHouseController);
 
 // Users
-app.get("/users", getUsersController);
-app.post("/users", createUserController);
-app.delete("/users/:userId", deleteUserController);
-app.get("/users/:userId", getUserController);
+// app.get("/users", getUsersController);
+// app.post("/users", createUserController);
+// app.delete("/users/:userId", deleteUserController);
+// app.get("/users/:userId", getUserController);
+
+// New user login/regist
+// app.post("/users", createUserController);
+app.use("/users", userRoutes)
+
+app.use((req, res, next) => {
+  next(createHttpError(404, "Endpoint not found"));
+});
+
+app.use((error: unknown, req: Request, res: Response, next: NextFunction) => {
+  console.error(error);
+  let errorMessage = "An unknown error occurred";
+  let statusCode = 500;
+  if (isHttpError(error)) {
+      statusCode = error.status;
+      errorMessage = error.message;
+  }
+  res.status(statusCode).json({ error: errorMessage });
+});
 
 mongoose.connect(process.env.MONGO_URL!).then(() => {
-  console.log(`listening on port ${PORT}`);
-  app.listen(PORT);
+  console.log(`listening on port ${env.PORT}`);
+  app.listen(env.PORT);
 });
